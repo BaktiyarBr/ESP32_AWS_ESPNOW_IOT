@@ -112,12 +112,6 @@ void OnDataRecv(const uint8_t * mac_addr, const uint8_t *incomingData, int len) 
   switch (type) {
   case DATA :      // we received data from server
     memcpy(&inData, incomingData, sizeof(inData));
-    myData.rele1OutgoingValue = digitalRead(RELE1_PIN);
-    myData.rele2OutgoingValue = digitalRead(RELE2_PIN);
-    myData.rele3OutgoingValue = digitalRead(RELE3_PIN);
-    myData.msgType = DATA;
-    esp_err_t result = esp_now_send(serverAddress, (uint8_t *) &myData, sizeof(myData));
-    
     digitalWrite(RELE1_PIN, inData.rele1);
     digitalWrite(RELE2_PIN, inData.rele2);
     digitalWrite(RELE3_PIN, inData.rele3);
@@ -240,6 +234,8 @@ void setup() {
     Serial.println(channel);
   #endif  
   pairingStatus = PAIR_REQUEST;
+  Serial.print("sizeof struct_message = ");
+  Serial.println(sizeof (struct_message));
 }  
 
 void loop() {
@@ -272,6 +268,10 @@ void loop() {
       myData.msgType = DATA;
       myData.id = 2;
       myData.readingId = readingId ++;
+      myData.rele1OutgoingValue = digitalRead(RELE1_PIN);
+      myData.rele2OutgoingValue = digitalRead(RELE2_PIN);
+      myData.rele3OutgoingValue = digitalRead(RELE3_PIN);
+
       esp_err_t result = esp_now_send(serverAddress, (uint8_t *) &myData, sizeof(myData));
     }
   }
