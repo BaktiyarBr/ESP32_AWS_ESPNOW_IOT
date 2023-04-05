@@ -5,8 +5,8 @@
 #include <WiFiMulti.h>
 
 // Replace with your network credentials (STATION)
-const char *ssid = "";
-const char *password = "";
+const char *ssid = "12345678";
+const char *password = "12345678";
 
 #define WS_HOST "thenl548o7.execute-api.eu-central-1.amazonaws.com"
 #define WS_PORT 443
